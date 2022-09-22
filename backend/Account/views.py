@@ -1,3 +1,11 @@
-from django.shortcuts import render
 
-# Create your views here.
+
+ 
+
+########### register here #####################################
+def register(request):
+    pass
+
+################ login forms###################################################
+def login(request):
+    pass
