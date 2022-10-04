@@ -1,7 +1,3 @@
-
-
- 
-
 ########### register here #####################################
 def register(request):
     pass
