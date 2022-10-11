@@ -5,6 +5,7 @@ import boto3
 
 
 load_dotenv()
+
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID') 
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
@@ -13,12 +14,14 @@ AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
 session = boto3.Session(
         aws_access_key_id=AWS_ACCESS_KEY_ID,
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        
 #Then use the session to get the resource
 s3 = session.resource(   's3',
         region_name='sfo3',
         endpoint_url=AWS_S3_ENDPOINT_URL,)
 
 my_bucket = s3.Bucket(AWS_STORAGE_BUCKET_NAME)
+
 for my_bucket_object in my_bucket.objects.all():
     print(my_bucket_object.key) 
 
