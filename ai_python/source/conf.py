@@ -14,7 +14,7 @@ release = '12-15-2022'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ['sphinx.ext.duration']
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -26,3 +26,6 @@ exclude_patterns = []
 
 html_theme = 'furo'
 html_static_path = ['_static']
+
+# EPUB options
+epub_show_urls = 'footnote'
