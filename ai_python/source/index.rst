@@ -1,0 +1,25 @@
+.. corn_ai_project documentation master file, created by
+   sphinx-quickstart on Thu Oct 13 16:02:28 2022.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Corn AI's documentation!
+===========================================
+**Corn AI** is a Python Machine Learning algorithm using the TensorFlow/Keras AI libraries to determine the healthiness of a corn leaf.
+
+.. note::
+
+   This project is under active development.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
