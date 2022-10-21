@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/homepage.css';
+import '../css/HomePage.css';
 import { useNavigate } from "react-router-dom";
 
 const Training = () => {
@@ -17,7 +17,7 @@ const Training = () => {
                     </button>
                 </div>
                 <button class="bkg_Color1 o_btn o_btnM ml" onClick={() => { navigate("/"); }} type="button">
-                    <b>Home</b>
+                    <b>Sign Out</b>
                 </button>
             </div>
             <div class="row">
@@ -35,7 +35,7 @@ const Training = () => {
                             <div class='row'>
                                 <div class="column4"></div>
                                 <div class="column6">
-                                    <button class="bkg_ColorHealthy o_btn o_btnXL" type="button">
+                                    <button class="bkg_ColorHealthy o_btn o_btnXL mar_leftS" type="button">
                                         <b>Healthy</b>
                                     </button>
                                 </div>
@@ -44,8 +44,8 @@ const Training = () => {
                         <div class="column5">
                             <div class='row'>
                                 <div class="column4"></div>
-                                <div class="column6">
-                                    <button class="bkg_ColorUnhealthy o_btn o_btnXL" type="button">
+                                <div class="column6 mar_left">
+                                    <button class="bkg_ColorUnhealthy o_btn o_btnXL mar_left" type="button">
                                         <b>Unhealthy</b>
                                     </button>
                                 </div>
