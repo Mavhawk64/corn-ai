@@ -1,0 +1,91 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5rem;
+    background-color: #38015c;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}
+
+.bkg_Color1 {
+    background-color: aquamarine;
+    color: #444;
+}
+
+.bkg_ColorHealthy {
+    background-color: chartreuse;
+    color: #000;
+}
+
+.bkg_ColorUnhealthy {
+    background-color: crimson;
+    color: #FFF;
+}
+
+.bkg_ColorBlack {
+    background-color: #000;
+    color: #FFF;
+}
+
+.bkg_ColorWhite {
+    background-color: #FFF;
+    color: #000;
+}
+
+.ml {
+    margin-left: 10px !important;
+}
+
+.o_btn {
+    line-height: 1;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: 25%;
+    outline: none;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 0.1875rem;
+    -webkit-transition: background-color 0.2s ease-out, border 0.2s ease-out, color 0.2s ease-out;
+}
+
+.o_btn:focus {
+    outline: 2px dotted #fff;
+    outline-offset: -0.3rem;
+}
+
+.o_btnM {
+    height: 4rem;
+    padding: 0 2rem;
+    width: 10rem;
+}
+
+.o_btnXL {
+    height: 8rem;
+    padding: 0 2rem;
+    width: 15rem;
+}
+
+.o_btnS {
+    height: 2rem;
+    padding: 0 2rem;
+    width: 5rem;
+    border-radius: 25px;
+    border: 1px solid green;
+}

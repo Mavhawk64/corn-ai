@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useState, useRef, useContext} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
@@ -62,7 +62,7 @@ const AuthForm = () => {
                     new Date().getTime() + +data.expiresIn * 1000
                 );
                 authCtx.login(data.idToken, expirationTime.toISOString());
-               navigate('/', { replace: true});
+                navigate('/', {replace: true});
             })
             .catch((err) => {
                 alert(err.message);
@@ -75,7 +75,7 @@ const AuthForm = () => {
             <form onSubmit={submitHandler}>
                 <div className={classes.control}>
                     <label htmlFor='email'>Your Email</label>
-                    <input type='email' id='email' required ref={emailInputRef} />
+                    <input type='email' id='email' required ref={emailInputRef}/>
                 </div>
                 <div className={classes.control}>
                     <label htmlFor='password'>Your Password</label>

@@ -1,9 +1,7 @@
 import React from 'react';
 import '../css/HomePage.css';
-import { useNavigate } from "react-router-dom";
 
 const Training = () => {
-    let navigate = useNavigate();
 
     return (
         <div>
@@ -16,13 +14,11 @@ const Training = () => {
                         <b>Next</b>
                     </button>
                 </div>
-                <button class="bkg_Color1 o_btn o_btnM ml" onClick={() => { navigate("/"); }} type="button">
-                    <b>Sign Out</b>
-                </button>
             </div>
             <div class="row">
                 <div class="column6 p_topL fill p_leftL">
-                    <img src='https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/original_corn_pics/images_handheld/DSC00033.JPG'
+                    <img
+                        src='https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/original_corn_pics/images_handheld/DSC00033.JPG'
                         height={600}
                         width={100} alt="placeholder"></img>
                 </div>
