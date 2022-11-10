@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState, useRef, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
+import Verify from './Verify';
+import SendVerificationEmail from "./SendVerificationEmail";
 
 const AuthForm = () => {
     const navigate = useNavigate();
@@ -14,6 +16,13 @@ const AuthForm = () => {
 
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+
+        useEffect(() => {
+            if (authCtx.isLoggedIn) {
+                SendVerificationEmail();
+                navigate('/verify', {replace: true});
+            }
+        });
 
     const switchAuthModeHandler = () => {
         setIsLogin((prevState) => !prevState);
@@ -57,12 +66,22 @@ const AuthForm = () => {
                     });
                 }
             })
-            .then((data) => {
+            .then(async (data) => {
                 const expirationTime = new Date(
                     new Date().getTime() + +data.expiresIn * 1000
                 );
                 authCtx.login(data.idToken, expirationTime.toISOString());
-                navigate('/', {replace: true});
+                return await Verify();
+
+            })
+            .then(async (verified) => {
+                if (verified) {
+                    await authCtx.verify(verified);
+                    navigate('/', {replace: true});
+                } else {
+                    SendVerificationEmail();
+                    navigate('/verify', {replace: true});
+                }
             })
             .catch((err) => {
                 alert(err.message);
@@ -97,6 +116,13 @@ const AuthForm = () => {
                         onClick={switchAuthModeHandler}
                     >
                         {isLogin ? 'Create new account' : 'Login with existing account'}
+                    </button>
+                    <button
+                        type='button'
+                        className={classes.toggle}
+                        onClick={() => { navigate('/forgot-password', {replace: true});}}
+                        >
+                        Forgot Password
                     </button>
                 </div>
             </form>
