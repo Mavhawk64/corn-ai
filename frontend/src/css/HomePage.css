@@ -68,6 +68,10 @@
     color: #444;
 }
 
+.btn_left {
+    margin-left: 50px;
+}
+
 .bkg_ColorHealthy {
     background-color: chartreuse;
     color: #000;
