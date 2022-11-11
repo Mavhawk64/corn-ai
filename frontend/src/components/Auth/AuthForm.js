@@ -66,17 +66,18 @@ const AuthForm = () => {
                     });
                 }
             })
-            .then(async (data) => {
+            .then((data) => {
                 const expirationTime = new Date(
                     new Date().getTime() + +data.expiresIn * 1000
                 );
                 authCtx.login(data.idToken, expirationTime.toISOString());
-                return await Verify();
+                const verified = Verify;
+                return verified;
 
             })
-            .then(async (verified) => {
+            .then((verified) => {
                 if (verified) {
-                    await authCtx.verify(verified);
+                    authCtx.verify(verified);
                     navigate('/', {replace: true});
                 } else {
                     SendVerificationEmail();
