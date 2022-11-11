@@ -24,32 +24,13 @@ const Training = () => {
                 </div>
                 <div class="column4"></div>
             </div>
-            <div class="row">
-                <div class="column6 p_topL p_leftL">
-                    <div class="row">
-                        <div class="column5">
-                            <div class='row'>
-                                <div class="column4"></div>
-                                <div class="column6">
-                                    <button class="bkg_ColorHealthy o_btn o_btnXL mar_leftS" type="button">
-                                        <b>Healthy</b>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column5">
-                            <div class='row'>
-                                <div class="column4"></div>
-                                <div class="column6 mar_left">
-                                    <button class="bkg_ColorUnhealthy o_btn o_btnXL mar_left" type="button">
-                                        <b>Unhealthy</b>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column4"></div>
+            <div class="row header">
+                <button class="bkg_ColorHealthy o_btn o_btnXL" type="button">
+                    <b>Healthy</b>
+                </button>
+                <button class="bkg_ColorUnhealthy o_btn o_btnXL mar_left" type="button">
+                    <b>Unhealthy</b>
+                </button>
             </div>
         </div>
     );
