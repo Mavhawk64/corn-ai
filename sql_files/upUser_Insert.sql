@@ -1,11 +1,10 @@
 create PROCEDURE upUser_Insert (
     @FireBaseID varchar(128),
-    @Email varchar(255),
-    @DateCreated datetime
+    @UserEmail varchar(255)
 )
 
 language sql
 
 as $$
-INSERT INTO User (Firebase_User_Id, User_Email, Date_Created) VALUES (@FireBaseID, @Email, @DateCreated);
+INSERT INTO User (Firebase_User_Id, User_Email, Date_Created) VALUES (@FireBaseID, @UserEmail, now());
 $$;
