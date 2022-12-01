@@ -19,7 +19,6 @@ const AuthForm = () => {
 
         useEffect(() => {
             if (authCtx.isLoggedIn) {
-                SendVerificationEmail();
                 navigate('/verify', {replace: true});
             }
         });
