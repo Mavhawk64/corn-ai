@@ -6,6 +6,7 @@ import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
 import Verify from './Verify';
 import SendVerificationEmail from "./SendVerificationEmail";
+import {fetcher} from "../shared/helpers";
 
 const AuthForm = () => {
     const navigate = useNavigate();
@@ -66,6 +67,9 @@ const AuthForm = () => {
                 }
             })
             .then((data) => {
+                if(!isLogin) {
+                    newUser(data.email, data.localId);
+                }
                 const expirationTime = new Date(
                     new Date().getTime() + +data.expiresIn * 1000
                 );
@@ -87,6 +91,19 @@ const AuthForm = () => {
                 alert(err.message);
             });
     };
+
+    async function newUser(email, id) {
+        let url = "placeholder";
+        let data = {
+            "placeholder1": email,
+            "placeholder2": id
+        };
+        let args = {
+            method: "PUT",
+            body: JSON.stringify("data")
+        };
+        // return await this.fetcher(url, args);
+    }
 
     return (
         <section className={classes.auth}>
