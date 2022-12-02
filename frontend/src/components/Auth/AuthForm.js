@@ -69,7 +69,7 @@ const AuthForm = () => {
                 const expirationTime = new Date(
                     new Date().getTime() + +data.expiresIn * 1000
                 );
-                authCtx.login(data.idToken, expirationTime.toISOString());
+                authCtx.login(data.idToken, expirationTime.toISOString(), data.email, data.localId);
                 const verified = Verify();
                 return verified;
 

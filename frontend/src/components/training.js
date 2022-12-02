@@ -44,10 +44,11 @@ const Training = () => {
     async function saveUserChoice() {
         let url = "placeholder";
         let data = {
-            'placeholder': imageUrl,
-            'placeholder1': aiHealth,
-            'placeholder2': confidence,
-            'placeholder3': userChoice
+            'placeholder1': localStorage.getItem('id'),
+            'placeholder2': imageUrl,
+            'placeholder3': aiHealth,
+            'placeholder4': confidence,
+            'placeholder5': userChoice
         };
         let args = {
             method: "PUT",
