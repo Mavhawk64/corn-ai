@@ -123,3 +123,24 @@ def upUser_Update(request,Firebase_User_Id,User_Email):
 
     # Send back a response
     return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+def uploadFile(request):
+
+    # this is the image 
+    file = request.FILES['file']
+
+    # -> 
+
+    ## run your machine learning models here
+    ## do something with the image
+
+    # ->
+
+
+    # -> return a response 
+    response_data = {}
+    response_data['result'] = 'Ok'
+    response_data['message'] = 'We got the image but the functionality was not added' 
+
+    # Send back a response
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
