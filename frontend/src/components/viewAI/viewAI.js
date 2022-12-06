@@ -6,7 +6,6 @@ import {fetcher} from "../shared/helpers";
 const ViewAI = () => {
     let [imageUrl, setImageUrl] = React.useState("https://via.placeholder.com/468x60?text=Agro-AI+Placeholder");
     let aiHealth = "unknown";
-    let confidence = "one billion";
 
     function onNext() {
         getImage();
@@ -20,7 +19,6 @@ const ViewAI = () => {
         };
         // let imageData =  await this.fetcher(url, args);
         // aiHealth = imageData.placeholder;
-        // confidence = imageData.placeholder;
         // setImageUrl(imageData.placeholder);
     }
 
@@ -29,14 +27,19 @@ const ViewAI = () => {
     })
 
     return (
-        <div>
+        <div class="p_leftL p_rightR">
             <React.Fragment>
-                <p>{`The AI thinks the leaf is ${aiHealth} with a confidence of ${confidence}.`}</p>
+                <p>{`The AI thinks the leaf is ${aiHealth}.`}</p>
                 {(aiHealth === 'healthy') ?
-                    <img
-                        src={imageUrl}></img>
+                    <div>
+                        <img src={imageUrl}></img>
+                    </div>
                     :
-                    <Draw img={imageUrl}/>
+                    <div>
+                        <p>The green rectangle represents the area the AI determines as sick.</p>
+                        <p>The red rectangle represents the actual sick area.</p>
+                        <Draw img={imageUrl}/>
+                    </div>
                 }
             </React.Fragment>
             <div className="row header">

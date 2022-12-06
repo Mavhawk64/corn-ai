@@ -9,7 +9,6 @@ const Training = () => {
     let userChoice = "none";
     let imageUrl = "https://via.placeholder.com/468x60?text=Agro-AI+Placeholder";
     let aiHealth = "unknown";
-    let confidence = "one billion";
 
     function onHealthy() {
         userChoice = "healthy";
@@ -38,7 +37,6 @@ const Training = () => {
         // let imageData =  await this.fetcher(url, args);
         // imageUrl = imageData.placeholder;
         // aiHealth = imageData.placeholder;
-        // confidence = imageData.placeholder;
     }
 
     async function saveUserChoice() {
@@ -47,7 +45,6 @@ const Training = () => {
             'placeholder1': localStorage.getItem('id'),
             'placeholder2': imageUrl,
             'placeholder3': aiHealth,
-            'placeholder4': confidence,
             'placeholder5': userChoice
         };
         let args = {
@@ -65,10 +62,10 @@ const Training = () => {
     })
 
     return (
-        <div>
+        <div class="p_leftL p_rightR">
             {(showAI) ?
                 <React.Fragment>
-                    <p>{`The AI thinks the leaf is ${aiHealth} with a confidence of ${confidence}.`}</p>
+                    <p>{`The AI thinks the leaf is ${aiHealth}.`}</p>
                     {(aiHealth === 'healthy') ?
                         <img
                             src={imageUrl}></img>
