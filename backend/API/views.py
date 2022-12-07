@@ -17,6 +17,7 @@ def History(request,History_Id,Firebase_User_Id):
 
  
 def User(request,Firebase_User_Id,User_Email):
+    print("user")
     ## all the parameters are provided above
 
     ## do you calculations here - START
