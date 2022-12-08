@@ -27,7 +27,7 @@ function Draw(img) {
             <canvas
                 ref={canvasRef}
                 style={{
-                width: "90%",
+                width: "40%",
                 height: "auto",
                 aspectRatio: 3/2,
                 backgroundImage: url,

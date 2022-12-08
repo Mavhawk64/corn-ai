@@ -75,7 +75,11 @@ const Training = () => {
                     <p>{`The AI thinks the leaf is ${health}.`}</p>
                     {(health === 'healthy') ?
                         <img
-                            src={imageUrl} alt="corn leaf"></img>
+                            src={imageUrl} alt="corn leaf"style={{
+                                width: "40%",
+                                height: "auto",
+                                aspectRatio: 3 / 2,
+                            }}></img>
                         :
                         <div>
                             <p>The blue rectangle represents the area the AI determines as sick.</p>
@@ -86,17 +90,15 @@ const Training = () => {
                 </React.Fragment>
                 :
                 <div className="row">
-                    <div className="column6 p_topL fill p_leftL">
                         <img
                             src={imageUrl}
                             alt="placeholder"
                             style={{
-                                width: "100%",
+                                width: "40%",
                                 height: "auto",
                                 aspectRatio: 3 / 2,
                             }}></img>
                     </div>
-                </div>
             }
             {(showAI) ?
                 <div className="row header">
