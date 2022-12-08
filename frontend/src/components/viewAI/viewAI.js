@@ -6,36 +6,39 @@ import {fetcher} from "../shared/helpers";
 const ViewAI = () => {
     let [imageUrl, setImageUrl] = React.useState("https://via.placeholder.com/468x60?text=Agro-AI+Placeholder");
     let [health, setHealth] = React.useState('unknown');
-    let sickAreaAi = {
+    let [sickAreaAi, setSickAreaAi] = React.useState({
         x: 0,
         y: 0,
         width: 0,
         height: 0,
-    };
-    let sickAreaActual = {
+    });
+    let [sickAreaActual, setSickAreaActual] = React.useState({
         x: 0,
         y: 0,
         width: 0,
         height: 0,
-    };
+    });
+    let [loading, setLoading] = React.useState(true);
 
     function onNext() {
         getImage();
     }
 
     async function getImage() {
-        let imageData = await fetcher('requestImage', 'GET')
+        setLoading(true);
+        let imageData = await fetcher('requestImage', 'GET');
 
-        console.log(imageData);
-
-        (imageData.isSick) ? setHealth("healthy") : setHealth("sick");
-        sickAreaAi = imageData.sickAreaAI;
-        sickAreaActual = imageData.sickAreaActual;
+        (imageData.isSick) ? setHealth("sick") : setHealth("healthy");
+        setSickAreaAi(imageData.sickAreaAI);
+        setSickAreaActual(imageData.sickAreaActual);
         setImageUrl(imageData.imageUrl);
+        setLoading(false);
     }
 
     useEffect(() => {
-        getImage();
+        if (loading) {
+            getImage();
+        }
     })
 
     return (
@@ -44,7 +47,12 @@ const ViewAI = () => {
                 <p>{`The AI thinks the leaf is ${health}.`}</p>
                 {(health === 'healthy') ?
                     <div>
-                        <img src={imageUrl}></img>
+                        <img src={imageUrl} alt="corn leaf"
+                             style={{
+                                 width: "100%",
+                                 height: "auto",
+                                 aspectRatio: 3 / 2,
+                             }}></img>
                     </div>
                     :
                     <div>

@@ -1,20 +1,23 @@
 import React, {useEffect, useRef} from "react";
 
 function Draw(img) {
+
     const canvasRef = useRef();
 
     const drawRectangle = () => {
+
         const context = canvasRef.current.getContext("2d");
         context.lineWidth = 2;
         context.strokeStyle = "blue";
-        context.strokeRect(img.sickAreaAi.x, img.sickAreaAi.y, img.sickAreaAi.width, img.sickAreaAi.height);
+        context.strokeRect(Number(img.sickAreaAi.x), Number(img.sickAreaAi.y), Number(img.sickAreaAi.width), Number(img.sickAreaAi.height));
         context.strokeStyle = "red";
-        context.strokeRect(img.sickAreaActual.x, img.sickAreaActual.y, img.sickAreaActual.width, img.sickAreaActual.height);
+        context.strokeRect(Number(img.sickAreaActual.x), Number(img.sickAreaActual.y), Number(img.sickAreaActual.width), Number(img.sickAreaActual.height));
+
     };
 
     useEffect(() => {
         drawRectangle();
-    }, []);
+    });
 
     let url = "url(" + img.img + ")";
 
@@ -24,10 +27,10 @@ function Draw(img) {
             <canvas
                 ref={canvasRef}
                 style={{
-                width: "100%",
+                width: "90%",
                 height: "auto",
                 aspectRatio: 3/2,
-                background: url,
+                backgroundImage: url,
                 backgroundSize: "contain",
                 }}
             />

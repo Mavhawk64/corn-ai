@@ -9,29 +9,31 @@ const Training = () => {
     let [imageUrl, setImageUrl] = React.useState("false");
     let userChoice = "none";
     let [health, setHealth] = React.useState('unknown');
-    let sickAreaAi = {
+    let [sickAreaAi, setSickAreaAi] = React.useState({
         x: 0,
         y: 0,
         width: 0,
         height: 0,
-    };
-    let sickAreaActual = {
+    });
+    let [sickAreaActual, setSickAreaActual] = React.useState({
         x: 0,
         y: 0,
         width: 0,
         height: 0,
-    };
+    });
+
+    let [loading, setLoading] = React.useState(true);
 
     function onHealthy() {
         userChoice = "healthy";
         setShowAI(true);
-        saveUserChoice();
+        // saveUserChoice();
     }
 
     function onSick() {
         userChoice = "sick";
         setShowAI(true);
-        saveUserChoice();
+       // saveUserChoice();
     }
 
     function onNext() {
@@ -41,14 +43,15 @@ const Training = () => {
 
     async function getImage() {
 
-        let imageData = await fetcher('requestImage', 'GET')
+        setLoading(true);
 
-        console.log(imageData);
+        let imageData = await fetcher('requestImage', 'GET');
 
-        (imageData.isSick) ? setHealth("healthy") : setHealth("sick");
-        sickAreaAi = imageData.sickAreaAI;
-        sickAreaActual = imageData.sickAreaActual;
+        (imageData.isSick) ? setHealth("sick") : setHealth("healthy");
+        setSickAreaAi(imageData.sickAreaAI);
+        setSickAreaActual(imageData.sickAreaActual);
         setImageUrl(imageData.imageUrl);
+        setLoading(false);
 
     }
 
@@ -60,8 +63,9 @@ const Training = () => {
     }
 
     useEffect(() => {
-        getImage();
-
+        if (loading) {
+            getImage();
+        }
     })
 
     return (
@@ -71,7 +75,7 @@ const Training = () => {
                     <p>{`The AI thinks the leaf is ${health}.`}</p>
                     {(health === 'healthy') ?
                         <img
-                            src={imageUrl}></img>
+                            src={imageUrl} alt="corn leaf"></img>
                         :
                         <div>
                             <p>The blue rectangle represents the area the AI determines as sick.</p>
@@ -85,9 +89,12 @@ const Training = () => {
                     <div className="column6 p_topL fill p_leftL">
                         <img
                             src={imageUrl}
-                            alt="placeholder"></img>
-                    </div>
-                    <div className="column4">
+                            alt="placeholder"
+                            style={{
+                                width: "100%",
+                                height: "auto",
+                                aspectRatio: 3 / 2,
+                            }}></img>
                     </div>
                 </div>
             }
