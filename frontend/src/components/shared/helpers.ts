@@ -1,20 +1,18 @@
-export const fetcher = async function (url: string, args: any = {}) {
-    args = {
-        ...{raw: false},
-        ...args
-    };
+export const fetcher = async function (url: string, method: string) {
+
     const request = await fetch(url, {
-        ...args,
+        method: method,
         headers: {
             'Content-Type': 'application/json',
-            ...args.headers,
         },
-        body:  args.body,
     });
 
-    if (args.raw) {
-        return await request.blob();
-    } else {
-        return await request.json();
-    }
+    return await request.json();
+}
+
+export const newUser = function (email: string, id: string) {
+
+    let url = `http://127.0.0.1:8000/API/user/${id}/${email}`;
+
+    fetcher(url, 'POST');
 }

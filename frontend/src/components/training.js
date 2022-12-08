@@ -6,8 +6,8 @@ import {fetcher} from "./shared/helpers";
 const Training = () => {
 
     let [showAI, setShowAI] = React.useState(false);
+    let [imageUrl, setImageUrl] = React.useState("false");
     let userChoice = "none";
-    let imageUrl = "https://via.placeholder.com/468x60?text=Agro-AI+Placeholder";
     let aiHealth = "unknown";
 
     function onHealthy() {
@@ -29,30 +29,17 @@ const Training = () => {
 
     async function getImage() {
         let url = "placeholder";
-        let args = {
-            method: "GET",
-            body: JSON.stringify("placeholder")
-        };
 
-        // let imageData =  await this.fetcher(url, args);
-        // imageUrl = imageData.placeholder;
+        // let imageData = await fetcher(url, 'GET')
+
+        // setImageUrl = imageData.placeholder;
         // aiHealth = imageData.placeholder;
     }
 
     async function saveUserChoice() {
         let url = "placeholder";
-        let data = {
-            'placeholder1': localStorage.getItem('id'),
-            'placeholder2': imageUrl,
-            'placeholder3': aiHealth,
-            'placeholder5': userChoice
-        };
-        let args = {
-            method: "PUT",
-            body: JSON.stringify(data)
-        };
 
-        return await this.fetcher(url, args);
+        return await this.fetcher(url, "POST");
 
     }
 
@@ -62,7 +49,7 @@ const Training = () => {
     })
 
     return (
-        <div class="p_leftL p_rightR">
+        <div className="p_leftL p_rightR">
             {(showAI) ?
                 <React.Fragment>
                     <p>{`The AI thinks the leaf is ${aiHealth}.`}</p>

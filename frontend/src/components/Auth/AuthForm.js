@@ -6,9 +6,10 @@ import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
 import Verify from './Verify';
 import SendVerificationEmail from "./SendVerificationEmail";
-import {fetcher} from "../shared/helpers";
+import {newUser} from "../shared/helpers";
 
 const AuthForm = () => {
+
     const navigate = useNavigate();
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
@@ -18,11 +19,11 @@ const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-        useEffect(() => {
-            if (authCtx.isLoggedIn) {
-                navigate('/verify', {replace: true});
-            }
-        });
+    useEffect(() => {
+        if (authCtx.isLoggedIn) {
+            navigate('/verify', {replace: true});
+        }
+    });
 
     const switchAuthModeHandler = () => {
         setIsLogin((prevState) => !prevState);
@@ -67,7 +68,7 @@ const AuthForm = () => {
                 }
             })
             .then((data) => {
-                if(!isLogin) {
+                if (!isLogin) {
                     newUser(data.email, data.localId);
                 }
                 const expirationTime = new Date(
@@ -91,19 +92,6 @@ const AuthForm = () => {
                 alert(err.message);
             });
     };
-
-    async function newUser(email, id) {
-        let url = "placeholder";
-        let data = {
-            "placeholder1": email,
-            "placeholder2": id
-        };
-        let args = {
-            method: "PUT",
-            body: JSON.stringify("data")
-        };
-        // return await this.fetcher(url, args);
-    }
 
     return (
         <section className={classes.auth}>
@@ -137,8 +125,10 @@ const AuthForm = () => {
                     <button
                         type='button'
                         className={classes.toggle}
-                        onClick={() => { navigate('/forgot-password', {replace: true});}}
-                        >
+                        onClick={() => {
+                            navigate('/forgot-password', {replace: true});
+                        }}
+                    >
                         Forgot Password
                     </button>
                 </div>

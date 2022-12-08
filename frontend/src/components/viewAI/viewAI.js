@@ -13,11 +13,8 @@ const ViewAI = () => {
 
     async function getImage() {
         let url = "placeholder";
-        let args = {
-            method: "GET",
-            body: JSON.stringify("placeholder")
-        };
-        // let imageData =  await this.fetcher(url, args);
+
+        // let imageData =  await this.fetcher(url, "GET");
         // aiHealth = imageData.placeholder;
         // setImageUrl(imageData.placeholder);
     }
