@@ -37,6 +37,6 @@ urlpatterns = [
     re_path('uploadFile', views.uploadFile),
 
     # DONE
-    re_path('requestImage', views.requestImage),
+    re_path('requestImage/(?P<currentIndex>[\w\-]+)', views.requestImage),
 ]
  
