@@ -157,20 +157,20 @@ def uploadFile(request):
 
 def requestImage(request):
     response_data = {
-  	"imageUrl": "url",
-	  "isSick": "false",
+  	"imageUrl": "https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/original_corn_pics/images_handheld/DSC00033.JPG",
+	  "isSick": "true",
 
 	  "sickAreaAI": {
-              "x": 0,
-         	    "y": 0,
-         	    "width": 0,
-         	    "height": 0
+              "x": 125,
+         	    "y": 60,
+         	    "width": 75,
+         	    "height": 22
 	  },
      	  "sickAreaActual": {
-              "x": 0,
-         	    "y": 0,
-         	    "width": 0,
-         	    "height": 0
+              "x": 142,
+         	    "y": 67,
+         	    "width": 50,
+         	    "height": 12
 	  }
     }
 

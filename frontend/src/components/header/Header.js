@@ -22,6 +22,11 @@ const Header = () => {
             }} type="button">
                 <b>Train</b>
             </button>}
+            {authCtx.isVerified && <button id="btn_2" className="bkg_Color1 o_btn o_btnM m1 btn_left" onClick={() => {
+                navigate("/view");
+            }} type="button">
+                <b>View</b>
+            </button>}
             {authCtx.isLoggedIn && <button id="btn_2" className="bkg_ColorUnhealthy o_btn o_btnM m1 btn_left" onClick={() => {
                 authCtx.logout();
             }} type="button">

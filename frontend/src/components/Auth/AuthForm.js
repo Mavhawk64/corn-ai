@@ -6,8 +6,10 @@ import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
 import Verify from './Verify';
 import SendVerificationEmail from "./SendVerificationEmail";
+import {newUser} from "../shared/helpers";
 
 const AuthForm = () => {
+
     const navigate = useNavigate();
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
@@ -17,11 +19,11 @@ const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-        useEffect(() => {
-            if (authCtx.isLoggedIn) {
-                navigate('/verify', {replace: true});
-            }
-        });
+    useEffect(() => {
+        if (authCtx.isLoggedIn) {
+            navigate('/verify', {replace: true});
+        }
+    });
 
     const switchAuthModeHandler = () => {
         setIsLogin((prevState) => !prevState);
@@ -66,10 +68,13 @@ const AuthForm = () => {
                 }
             })
             .then((data) => {
+                if (!isLogin) {
+                    newUser(data.email, data.localId);
+                }
                 const expirationTime = new Date(
                     new Date().getTime() + +data.expiresIn * 1000
                 );
-                authCtx.login(data.idToken, expirationTime.toISOString());
+                authCtx.login(data.idToken, expirationTime.toISOString(), data.email, data.localId);
                 const verified = Verify();
                 return verified;
 
@@ -120,8 +125,10 @@ const AuthForm = () => {
                     <button
                         type='button'
                         className={classes.toggle}
-                        onClick={() => { navigate('/forgot-password', {replace: true});}}
-                        >
+                        onClick={() => {
+                            navigate('/forgot-password', {replace: true});
+                        }}
+                    >
                         Forgot Password
                     </button>
                 </div>
