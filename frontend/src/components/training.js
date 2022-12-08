@@ -8,7 +8,19 @@ const Training = () => {
     let [showAI, setShowAI] = React.useState(false);
     let [imageUrl, setImageUrl] = React.useState("false");
     let userChoice = "none";
-    let aiHealth = "unknown";
+    let [health, setHealth] = React.useState('unknown');
+    let sickAreaAi = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+    };
+    let sickAreaActual = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+    };
 
     function onHealthy() {
         userChoice = "healthy";
@@ -28,12 +40,16 @@ const Training = () => {
     }
 
     async function getImage() {
-        let url = "placeholder";
 
-        // let imageData = await fetcher(url, 'GET')
+        let imageData = await fetcher('requestImage', 'GET')
 
-        // setImageUrl = imageData.placeholder;
-        // aiHealth = imageData.placeholder;
+        console.log(imageData);
+
+        (imageData.isSick) ? setHealth("healthy") : setHealth("sick");
+        sickAreaAi = imageData.sickAreaAI;
+        sickAreaActual = imageData.sickAreaActual;
+        setImageUrl(imageData.imageUrl);
+
     }
 
     async function saveUserChoice() {
@@ -52,12 +68,16 @@ const Training = () => {
         <div className="p_leftL p_rightR">
             {(showAI) ?
                 <React.Fragment>
-                    <p>{`The AI thinks the leaf is ${aiHealth}.`}</p>
-                    {(aiHealth === 'healthy') ?
+                    <p>{`The AI thinks the leaf is ${health}.`}</p>
+                    {(health === 'healthy') ?
                         <img
                             src={imageUrl}></img>
                         :
-                        <Draw img={imageUrl}/>
+                        <div>
+                            <p>The blue rectangle represents the area the AI determines as sick.</p>
+                            <p>The red rectangle represents the actual sick area.</p>
+                            <Draw img={imageUrl} sickAreaAi={sickAreaAi} sickAreaActual={sickAreaActual}/>
+                        </div>
                     }
                 </React.Fragment>
                 :

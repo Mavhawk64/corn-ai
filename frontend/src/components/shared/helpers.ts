@@ -1,6 +1,8 @@
 export const fetcher = async function (url: string, method: string) {
 
-    const request = await fetch(url, {
+    let endpoint = 'http://127.0.0.1:8000/API/' + url;
+
+    const request = await fetch(endpoint, {
         method: method,
         headers: {
             'Content-Type': 'application/json',
@@ -12,7 +14,7 @@ export const fetcher = async function (url: string, method: string) {
 
 export const newUser = function (email: string, id: string) {
 
-    let url = `http://127.0.0.1:8000/API/user/${id}/${email}`;
+    let url = `${id}/${email}`;
 
     fetcher(url, 'POST');
 }
