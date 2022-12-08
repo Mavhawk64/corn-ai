@@ -32,5 +32,11 @@ urlpatterns = [
 
     # DONE
     re_path('upUser_Update/(?P<Firebase_User_Id>[\w\-]+)/(?P<User_Email>[\w\-]+)', views.upUser_Update),
+
+    # DONE
+    re_path('uploadFile', views.uploadFile),
+
+    # DONE
+    re_path('requestImage', views.requestImage),
 ]
  
