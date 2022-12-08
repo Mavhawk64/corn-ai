@@ -35,5 +35,8 @@ urlpatterns = [
 
     # DONE
     re_path('uploadFile', views.uploadFile),
+
+    # DONE
+    re_path('requestImage', views.requestImage),
 ]
  
