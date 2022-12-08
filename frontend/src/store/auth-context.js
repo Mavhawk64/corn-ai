@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 let logoutTimer;
 
@@ -6,9 +6,12 @@ const AuthContext = React.createContext({
     token: '',
     isLoggedIn: false,
     isVerified: false,
-    verify: (verified) => {},
-    login: (token) => {},
-    logout: () => {},
+    verify: (verified) => {
+    },
+    login: (token) => {
+    },
+    logout: () => {
+    },
 });
 
 const calculateRemainingTime = (expirationTime) => {
@@ -28,9 +31,7 @@ const retrieveStoredToken = () => {
     const remainingTime = calculateRemainingTime(storedExpirationDate);
 
     if (remainingTime <= 3600) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expirationTime');
-        localStorage.removeItem('verified');
+        clearStorage();
         return null;
     }
 
@@ -40,6 +41,14 @@ const retrieveStoredToken = () => {
         verified: storedVerification
     };
 };
+
+function clearStorage() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationTime');
+    localStorage.removeItem('verified');
+    localStorage.removeItem('email');
+    localStorage.removeItem('id');
+}
 
 export const AuthContextProvider = (props) => {
     const tokenData = retrieveStoredToken();
@@ -60,19 +69,19 @@ export const AuthContextProvider = (props) => {
     const logoutHandler = useCallback(() => {
         setToken(null);
         setVerified(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('expirationTime');
-        localStorage.removeItem('verified');
+        clearStorage();
 
         if (logoutTimer) {
             clearTimeout(logoutTimer);
         }
     }, []);
 
-    const loginHandler = (token, expirationTime) => {
+    const loginHandler = (token, expirationTime, email, id) => {
         setToken(token);
         localStorage.setItem('token', token);
         localStorage.setItem('expirationTime', expirationTime);
+        localStorage.setItem('email', email);
+        localStorage.setItem('id', id);
 
         const remainingTime = calculateRemainingTime(expirationTime);
 
