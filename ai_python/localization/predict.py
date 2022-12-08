@@ -38,6 +38,7 @@ for imagePath in imagePaths:
     (startX, startY, endX, endY) = model.predict(image)[0]
 
     print("[INFO] displaying results for {}".format(imagePath))
+    print("[INFO] coordinates -- startX: {}, startY: {}, endX: {}, endY: {}".format(startX, startY, endX, endY))
 
     image = cv2.imread(imagePath)
     image = imutils.resize(image, width=600)

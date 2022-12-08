@@ -2,7 +2,9 @@ import os
 
 BASE_PATH = "C:/Users/mavbe/Desktop/Coding Folder/Classes/CAPSTONE/corn"
 IMAGES_PATH = os.path.sep.join([BASE_PATH, "images"])
+# IMAGES_PATH = "https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/original_corn_pics/images_handheld"
 ANNOTS_PATH = os.path.sep.join([BASE_PATH, "annotations_handheld.csv"])
+# ANNOTS_PATH = "https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/annotations_handheld.csv"
 
 BASE_OUTPUT = "output"
 

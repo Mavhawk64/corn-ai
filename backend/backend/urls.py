@@ -10,5 +10,5 @@ urlpatterns = [
     re_path('', include('Home.urls')),  
     re_path('API/', include('API.urls')),  
     #re_path('rest-auth/', include('rest_auth.urls')),
-    re_path('rest-auth/registration/', include('rest_auth.registration.urls'))
+    # re_path('rest-auth/registration/', include('rest_auth.registration.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
