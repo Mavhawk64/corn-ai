@@ -929,4 +929,28 @@ def requestImage(request, currentIndex):
     maxLength = len(data['data'])
 
     # Send back a response
-    return HttpResponse(json.dumps(data['data'][currentIndex % maxLength]), content_type="application/json")
+    return HttpResponse(json.dumps(data['data'][int(currentIndex) % maxLength]), content_type="application/json")
+
+
+def userChoice(request, userId, imageUrl, isSick, isSickChoice, sAIx, sAIy, widthAI, heightAI, sACx, sACy, widthAC, heightAC):
+
+    # Take that information and save it to the database
+
+    # userId - (User’s firebase id)
+    # imageUrl - (URL of corn leaf)
+
+    # isSick - (True if AI thinks leaf is sick. False if  healthy)
+    # isSickChoice - (True if user chose sick. False if user chose healthy.)
+
+    # sAIx - sickAreaAI
+    # sAIy - sickAreaAI
+    # widthAI - sickAreaAI
+    # heightAI - sickAreaAI
+
+    # sACx - sickAreaActual
+    # sACy - sickAreaActual
+    # widthAC - sickAreaActual
+    # heightAC - sickAreaActual
+
+    # return 200 (OK) response
+    return HttpResponse(status=200)
