@@ -7,7 +7,6 @@ const Training = () => {
 
     let [showAI, setShowAI] = React.useState(false);
     let [imageUrl, setImageUrl] = React.useState("false");
-    let userChoice = "none";
     let [health, setHealth] = React.useState('unknown');
     let [sickAreaAi, setSickAreaAi] = React.useState({});
     let [sickAreaActual, setSickAreaActual] = React.useState({});
@@ -16,15 +15,13 @@ const Training = () => {
     let [loading, setLoading] = React.useState(true);
 
     function onHealthy() {
-        userChoice = "healthy";
         setShowAI(true);
-        // saveUserChoice();
+        // saveUserChoice(false);
     }
 
     function onSick() {
-        userChoice = "sick";
         setShowAI(true);
-        // saveUserChoice();
+        // saveUserChoice(true);
     }
 
     function onNext() {
@@ -52,10 +49,10 @@ const Training = () => {
 
     }
 
-    async function saveUserChoice() {
+    async function saveUserChoice(isSickChoice) {
         let firebaseId = localStorage.getItem("id")
         let isSick = (health === "sick");
-        let url = `userChoice/${firebaseId}/${imageUrl}/${isSick}/${sickAreaAi}/${sickAreaActual}`;
+        let url = `userChoice/${firebaseId}/${imageUrl}/${isSick}/${isSickChoice}/${sickAreaAi}/${sickAreaActual}`;
 
         return await this.fetcher(url, "POST");
 
