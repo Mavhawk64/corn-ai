@@ -12,11 +12,10 @@ const ViewAI = () => {
     let [id, setId] = React.useState(0);
 
     function onNext() {
-        console.log("next");
         if (id === 10) {
             setId(0);
         } else {
-            setId(id+1);
+            setId(id + 1);
         }
         getImage();
     }
@@ -24,7 +23,6 @@ const ViewAI = () => {
     async function getImage() {
         setLoading(true);
 
-        console.log(id);
         let imageData = await fetcher(`requestImage/${id}`, 'GET');
 
         // (imageData.isSick) ? setHealth("sick") : setHealth("healthy");
@@ -62,10 +60,12 @@ const ViewAI = () => {
                     </div>
                 }
             </React.Fragment>
-            <div className="row header">
-                <button className="bkg_ColorHealthy o_btn o_btnXL" type="button" onClick={onNext}>
-                    <b>Next</b>
-                </button>
+            <div className="row header w35">
+                <div className="center">
+                    <button className="bkg_ColorHealthy o_btn o_btnXL" type="button" onClick={onNext}>
+                        <b>Next</b>
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -9,18 +9,9 @@ const Training = () => {
     let [imageUrl, setImageUrl] = React.useState("false");
     let userChoice = "none";
     let [health, setHealth] = React.useState('unknown');
-    let [sickAreaAi, setSickAreaAi] = React.useState({
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
-    });
-    let [sickAreaActual, setSickAreaActual] = React.useState({
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
-    });
+    let [sickAreaAi, setSickAreaAi] = React.useState({});
+    let [sickAreaActual, setSickAreaActual] = React.useState({});
+    let [id, setId] = React.useState(0);
 
     let [loading, setLoading] = React.useState(true);
 
@@ -33,10 +24,15 @@ const Training = () => {
     function onSick() {
         userChoice = "sick";
         setShowAI(true);
-       // saveUserChoice();
+        // saveUserChoice();
     }
 
     function onNext() {
+        if (id === 10) {
+            setId(0);
+        } else {
+            setId(id + 1);
+        }
         getImage();
         setShowAI(false);
     }
@@ -45,11 +41,12 @@ const Training = () => {
 
         setLoading(true);
 
-        let imageData = await fetcher('requestImage', 'GET');
+        let imageData = await fetcher(`requestImage/${id}`, 'GET');
 
-        (imageData.isSick) ? setHealth("sick") : setHealth("healthy");
+        // (imageData.isSick) ? setHealth("sick") : setHealth("healthy");
+        setHealth("sick");
         setSickAreaAi(imageData.sickAreaAI);
-        setSickAreaActual(imageData.sickAreaActual);
+        setSickAreaActual(imageData.sickAreasActual);
         setImageUrl(imageData.imageUrl);
         setLoading(false);
 
@@ -75,11 +72,11 @@ const Training = () => {
                     <p>{`The AI thinks the leaf is ${health}.`}</p>
                     {(health === 'healthy') ?
                         <img
-                            src={imageUrl} alt="corn leaf"style={{
-                                width: "40%",
-                                height: "auto",
-                                aspectRatio: 3 / 2,
-                            }}></img>
+                            src={imageUrl} alt="corn leaf" style={{
+                            width: "40%",
+                            height: "auto",
+                            aspectRatio: 3 / 2,
+                        }}></img>
                         :
                         <div>
                             <p>The blue rectangle represents the area the AI determines as sick.</p>
@@ -89,25 +86,28 @@ const Training = () => {
                     }
                 </React.Fragment>
                 :
-                <div className="row">
-                        <img
-                            src={imageUrl}
-                            alt="placeholder"
-                            style={{
-                                width: "40%",
-                                height: "auto",
-                                aspectRatio: 3 / 2,
-                            }}></img>
-                    </div>
+                <div>
+                    <p>Is the corn leaf below healthy or sick?</p>
+                    <img
+                        src={imageUrl}
+                        alt="placeholder"
+                        style={{
+                            width: "40%",
+                            height: "auto",
+                            aspectRatio: 3 / 2,
+                        }}></img>
+                </div>
             }
             {(showAI) ?
-                <div className="row header">
-                    <button className="bkg_ColorHealthy o_btn o_btnXL" type="button" onClick={onNext}>
-                        <b>Next</b>
-                    </button>
+                <div className="row header w35">
+                    <div className="center">
+                        <button className="bkg_ColorHealthy o_btn o_btnXL" type="button" onClick={onNext}>
+                            <b>Next</b>
+                        </button>
+                    </div>
                 </div>
                 :
-                <div className="row header">
+                <div className="row header w35">
                     <button className="bkg_ColorHealthy o_btn o_btnXL" type="button" onClick={onHealthy}>
                         <b>Healthy</b>
                     </button>

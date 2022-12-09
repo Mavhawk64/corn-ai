@@ -63,6 +63,10 @@
     display: flex;
 }
 
+.w35 {
+    width: 35%;
+}
+
 .bkg_Color1 {
     background-color: aquamarine;
     color: #444;
@@ -134,6 +138,12 @@
     border-radius: 0.1875rem;
     -webkit-transition: background-color 0.2s ease-out, border 0.2s ease-out, color 0.2s ease-out;
     transition: background-color 0.2s ease-out, border 0.2 ease-out, color 0.2s ease-out;
+}
+
+.center {
+    display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .o_btn:focus {
