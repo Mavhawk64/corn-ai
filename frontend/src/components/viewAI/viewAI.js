@@ -6,31 +6,31 @@ import {fetcher} from "../shared/helpers";
 const ViewAI = () => {
     let [imageUrl, setImageUrl] = React.useState("https://via.placeholder.com/468x60?text=Agro-AI+Placeholder");
     let [health, setHealth] = React.useState('unknown');
-    let [sickAreaAi, setSickAreaAi] = React.useState({
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
-    });
-    let [sickAreaActual, setSickAreaActual] = React.useState({
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
-    });
+    let [sickAreaAi, setSickAreaAi] = React.useState({});
+    let [sickAreaActual, setSickAreaActual] = React.useState({});
     let [loading, setLoading] = React.useState(true);
+    let [id, setId] = React.useState(0);
 
     function onNext() {
+        console.log("next");
+        if (id === 10) {
+            setId(0);
+        } else {
+            setId(id+1);
+        }
         getImage();
     }
 
     async function getImage() {
         setLoading(true);
-        let imageData = await fetcher('requestImage', 'GET');
 
-        (imageData.isSick) ? setHealth("sick") : setHealth("healthy");
+        console.log(id);
+        let imageData = await fetcher(`requestImage/${id}`, 'GET');
+
+        // (imageData.isSick) ? setHealth("sick") : setHealth("healthy");
+        setHealth("sick");
         setSickAreaAi(imageData.sickAreaAI);
-        setSickAreaActual(imageData.sickAreaActual);
+        setSickAreaActual(imageData.sickAreasActual);
         setImageUrl(imageData.imageUrl);
         setLoading(false);
     }
@@ -49,7 +49,7 @@ const ViewAI = () => {
                     <div>
                         <img src={imageUrl} alt="corn leaf"
                              style={{
-                                 width: "100%",
+                                 width: "40%",
                                  height: "auto",
                                  aspectRatio: 3 / 2,
                              }}></img>
