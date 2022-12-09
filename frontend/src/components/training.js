@@ -53,7 +53,9 @@ const Training = () => {
     }
 
     async function saveUserChoice() {
-        let url = "placeholder";
+        let firebaseId = localStorage.getItem("id")
+        let isSick = (health === "sick");
+        let url = `userChoice/${firebaseId}/${imageUrl}/${isSick}/${sickAreaAi}/${sickAreaActual}`;
 
         return await this.fetcher(url, "POST");
 

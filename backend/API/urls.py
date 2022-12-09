@@ -38,5 +38,8 @@ urlpatterns = [
 
     # DONE
     re_path('requestImage/(?P<currentIndex>[\w\-]+)', views.requestImage),
+
+    # DONE
+    re_path('userChoice/(?P<userId>[\w\-]+)/(?P<imageUrl>[\w\-]+)/(?P<isSick>[\w\-]+)/(?P<isSickChoice>[\w\-]+)/(?P<sAIx>[\w\-]+)/(?P<sAIy>[\w\-]+)/(?P<widthAI>[\w\-]+)/(?P<heightAI>[\w\-]+)/(?P<sACx>[\w\-]+)/(?P<sACy>[\w\-]+)/(?P<widthAC>[\w\-]+)/(?P<heightAC>[\w\-]+)', views.userChoice),
 ]
  
