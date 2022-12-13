@@ -11,35 +11,20 @@ import os
 import json
 from datetime import datetime
 
-img_size = 224
+def get_ai_bounding_box(filename, img_size=224):
+    imagePath = os.path.sep.join([config.IMAGES_PATH, filename])
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--input", required=True, help="path to input input file")
-args = vars(ap.parse_args())
+    print("[INFO] loading object detector...")
+    model = load_model(config.MODEL_PATH)
 
-filetype = mimetypes.guess_type(args["input"])[0]
-imagePaths = [args["input"]]
+    print("[INFO] loading dataset...")
+    rows = open(config.ANNOTS_PATH).read().strip().split("\n")
 
-if "text/plain" == filetype:
-    filenames = open(args["input"]).read().strip().split("\n")
-    imagePaths = []
+    # Remove the rows that don't line up with the images we're using
+    rows = [row for row in rows if row.split(",")[0] == filename]
 
-    for filename in filenames:
-        p = os.path.sep.join([config.IMAGES_PATH, filename])
-        imagePaths.append(p)
+    myjson = {"response_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "data": []}
 
-print("[INFO] loading object detector...")
-model = load_model(config.MODEL_PATH)
-
-print("[INFO] loading dataset...")
-rows = open(config.ANNOTS_PATH).read().strip().split("\n")
-
-# Remove the rows that don't line up with the images we're using
-rows = [row for row in rows if row.split(",")[0] in filenames]
-
-myjson = {"response_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "data": []}
-
-for imagePath in imagePaths:
     myjson["data"].append({"image": imagePath.split(os.path.sep)[-1], "imageUrl": "https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/original_corn_pics/images_handheld/" + imagePath.split(os.path.sep)[-1], "sickAreaAI": {}, "sickAreasActual": []})
     print("[INFO] predicting bounding boxes for {}".format(imagePath))
     image = load_img(imagePath, target_size=(img_size, img_size))
@@ -54,7 +39,6 @@ for imagePath in imagePaths:
     myjson["data"][-1]["sickAreaAI"] = {"x": float(startX), "y": float(startY), "w": float(endX-startX), "h": float(endY-startY)}
 
     image = cv2.imread(imagePath)
-    # image = imutils.resize(image, width=600)
     (origh, origw) = image.shape[:2]
     image = imutils.resize(image, width=600)
     (h, w) = image.shape[:2]
@@ -62,7 +46,6 @@ for imagePath in imagePaths:
     startY = int(startY * h)
     endX = int(endX * w)
     endY = int(endY * h)
-    cv2.rectangle(image, (startX, startY), (endX, endY), (0, 255, 0), 2)
 
     # because the rows have multiple bounding boxes for each image, we need to add rectangles for each of them for that image
     for row in rows:
@@ -74,10 +57,9 @@ for imagePath in imagePaths:
             startY = int(float(startY) * h / origh)
             endX = int(float(endX) * w / origw)
             endY = int(float(endY) * h / origh)
-            cv2.rectangle(image, (startX, startY), (endX, endY), (0, 0, 255), 2)
-    cv2.imshow("Output", image)
-    cv2.waitKey(0)
+    
+    return myjson
 
-with open('output/output.json', 'w') as outfile:
-    # dump the json to a file with default=str and indent=3
-    json.dump(myjson, outfile, default=str, indent=3)
+
+filename = "DSC06878.JPG"
+print(get_ai_bounding_box(filename))
