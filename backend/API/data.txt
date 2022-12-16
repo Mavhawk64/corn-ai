@@ -1,165 +1,6 @@
-from django.shortcuts import render
-import json
-from django.http import HttpResponse
-from API.serializers import *   
-import json 
-from .models import *
-
-def History(request, History_Id, Firebase_User_Id):
-
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def User(request, Firebase_User_Id, User_Email):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upHistory_Delete(request, Firebase_User_Id, History_Id):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upHistory_Insert(request, Firebase_User_Id, Image_Url, Is_Sick_Choice):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upHistory_Select(request, Firebase_User_Id, History_Id):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upHistory_Update(request, Firebase_User_Id, History_Id, Image_Url, Is_Sick_Choice, Is_Sick_Actual, Is_Sick_AI):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upUser_Delete(request, Firebase_User_Id):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upUser_Insert(request, Firebase_User_Id, User_Email):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upUser_Select(request, Firebase_User_Id):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def upUser_Update(request, Firebase_User_Id, User_Email):
-    # all the parameters are provided above
-
-    # do you calculations here - START
-    response_data = {}
-    response_data['result'] = 'error'
-    response_data['message'] = 'Some error message'
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def uploadFile(request):
-
-    # this is the image
-    file = request.FILES['file']
-
-    # ->
-
-    # run your machine learning models here
-    # do something with the image
-
-    # ->
-
-    # -> return a response
-    response_data = {}
-    response_data['result'] = 'Ok'
-    response_data['message'] = 'We got the image but the functionality was not added'
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def requestImage(request, currentIndex):
-    CornImages = [
-CornImage(imageName="DSC03152.JPG"),
+ 
+CornImages = [
+    CornImage(imageName="DSC03152.JPG"),
 CornImage(imageName="IMG_6732.Jpeg"),
 CornImage(imageName="IMG_6698.Jpeg"),
 CornImage(imageName="DSC05245.JPG"),
@@ -1946,8 +1787,13 @@ CornImage(imageName="DSC03639.JPG"),
 CornImage(imageName="DSC05248.JPG"),
 CornImage(imageName="DSC00324.JPG"),
 CornImage(imageName="DSC04624.JPG"),
+
 ]
-    actualBoxess =  [
+ 
+# Save the instances using bulk_create()
+CornImage.objects.bulk_create(CornImages)
+ 
+actualBoxess =  [
     [BoxImage(x=0.546, y=0.284, w=-0.11, h=0.328)],
     [BoxImage(x=0.0, y=0.0, w=0.0, h=0.0)],
     [BoxImage(x=0.0, y=0.0, w=0.0, h=0.0)],
@@ -13597,47 +13443,15 @@ CornImage(imageName="DSC04624.JPG"),
      h=0.077)],
     [BoxImage(x=0.0, y=0.0, w=0.0, h=0.0)],
     ]
-    # do you calculations here - START
-    currentIndex = int(currentIndex) % len(CornImages)
-    response_data = {}
+ 
+CornImages = CornImage.objects.all()
+index = 0
+for corn_image in CornImages:
+    related_actualBox = actualBoxess[index]
+    BoxImage.objects.bulk_create(related_actualBox)
 
-    corn_images = CornImages[currentIndex]
-    serializer = CornImageSerializer(corn_images)
+    related_actualBox = BoxImage.objects.all()
 
-    data = serializer.data 
-    response_data['corn_images'] = data
-
-    box_images = actualBoxess[currentIndex][0]
-    serializer = BoxImageSerializer(box_images)
-
-    data = serializer.data
-    response_data['box_images'] = data
-    
-    # do you calculations here - END
-
-    # Send back a response
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-def userChoice(request, userId, imageUrl, isSick, isSickChoice, sAIx, sAIy, widthAI, heightAI, sACx, sACy, widthAC,
-               heightAC):
-    # Take that information and save it to the database
-
-    # userId - (User’s firebase id)
-    # imageUrl - (URL of corn leaf)
-
-    # isSick - (True if AI thinks leaf is sick. False if  healthy)
-    # isSickChoice - (True if user chose sick. False if user chose healthy.)
-
-    # sAIx - sickAreaAI
-    # sAIy - sickAreaAI
-    # widthAI - sickAreaAI
-    # heightAI - sickAreaAI
-
-    # sACx - sickAreaActual
-    # sACy - sickAreaActual
-    # widthAC - sickAreaActual
-    # heightAC - sickAreaActual
-
-    # return 200 (OK) response
-    return HttpResponse(status=200)
+    for actual_box in related_actualBox:
+        corn_image.actualBoxes.add(actual_box)
+    index += 1
