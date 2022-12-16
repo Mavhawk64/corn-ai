@@ -1,6 +1,6 @@
 import os
 
-BASE_PATH = "C:/Users/mavbe/Desktop/Coding Folder/Classes/CAPSTONE/corn"
+BASE_PATH = "/Users/maverick/Coding Folder/Python/csci4970"
 IMAGES_PATH = os.path.sep.join([BASE_PATH, "images"])
 # IMAGES_PATH = "https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/original_corn_pics/images_handheld"
 ANNOTS_PATH = os.path.sep.join([BASE_PATH, "annotations_handheld.csv"])
