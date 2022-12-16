@@ -4,6 +4,22 @@ from django.http import HttpResponse
 from API.serializers import *   
 import json 
 from .models import *
+from API.pyimagesearch import config
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import load_img
+from tensorflow.keras.models import load_model
+import numpy as np
+from PIL import Image
+from urllib import request
+from io import BytesIO
+import imutils
+import cv2
+import os
+import json
+from datetime import datetime
+import pandas as pd
+import urllib.request 
+
 
 def History(request, History_Id, Firebase_User_Id):
 
@@ -13607,17 +13623,84 @@ CornImage(imageName="DSC04624.JPG"),
     data = serializer.data 
     response_data['corn_images'] = data
 
-    box_images = actualBoxess[currentIndex][0]
-    serializer = BoxImageSerializer(box_images)
+    # box_images = actualBoxess[currentIndex][0]
+    # serializer = BoxImageSerializer(box_images)
 
-    data = serializer.data
-    response_data['box_images'] = data
+    # data = serializer.data
+    # response_data['box_images'] = data
+
+    data = get_ai_bounding_box(corn_images.imageName)
+    response_data['get_ai_bounding_box'] = data
     
     # do you calculations here - END
 
     # Send back a response
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+
+def get_ai_bounding_box(filename, img_size=224):
+    imagePath = config.IMAGES_PATH + "/" + filename 
+    #os.path.sep.join([config.IMAGES_PATH, filename])
+
+    print("[INFO] loading object detector...")
+    model = load_model(config.MODEL_PATH)
+
+    print("[INFO] loading dataset...")
+   # rows = pd.read_csv(config.ANNOTS_PATH)
+    url = config.ANNOTS_PATH
+    print("***")
+    print(url)
+    print("***")
+
+    rows = pd.read_csv(url).to_numpy().tolist()
+    # for each element in the rows array, combine the elements of the array into a string delimited by commas and account for integers
+    rows = [",".join([str(v) for v in row]) for row in rows]
+
+    # Remove the rows that don't line up with the images we're using
+    rows = [row for row in rows if row.split(",")[0] == filename]
+
+    myjson = {"response_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "data": []}
+
+    myjson["data"].append({"image": imagePath.split(os.path.sep)[-1], "imageUrl": "https://sfo3.digitaloceanspaces.com/csci4970-agro-ai-images/AI_Images/original_corn_pics/images_handheld/" + imagePath.split(os.path.sep)[-1], "sickAreaAI": {}, "sickAreasActual": []})
+    print("[INFO] predicting bounding boxes for {}".format(imagePath))
+    #image = load_img(imagePath, target_size=(img_size, img_size))
+
+    res = request.urlopen(imagePath).read()
+    image = Image.open(BytesIO(res)).resize((224,224))
+
+    image = img_to_array(image) / 255.0
+    image = np.expand_dims(image, axis=0)
+
+    (startX, startY, endX, endY) = model.predict(image)[0]
+
+    print("[INFO] displaying results for {}".format(imagePath))
+    print("[INFO] coordinates -- startX: {}, startY: {}, endX: {}, endY: {}".format(startX, startY, endX, endY))
+
+    myjson["data"][-1]["sickAreaAI"] = {"x": float(startX), "y": float(startY), "w": float(endX-startX), "h": float(endY-startY)}
+
+    req = urllib.request.urlopen(imagePath)
+    arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+    image = cv2.imdecode(arr, -1) # 'Load it as it is'
+    (origh, origw) = image.shape[:2]
+    image = imutils.resize(image, width=600)
+    (h, w) = image.shape[:2]
+    startX = int(startX * w)
+    startY = int(startY * h)
+    endX = int(endX * w)
+    endY = int(endY * h)
+
+    # because the rows have multiple bounding boxes for each image, we need to add rectangles for each of them for that image
+    for row in rows:
+        row = row.split(",")
+        (filename, startX, startY, endX, endY, _, _, _, _, _, _) = row
+        if filename == imagePath.split(os.path.sep)[-1]:
+            myjson["data"][-1]["sickAreasActual"].append({"x": float(startX) / origw, "y": float(startY) / origh, "w": (float(endX)-float(startX)) / origw, "h": (float(endY)-float(startY)) / origh})
+            startX = int(float(startX) * w / origw)
+            startY = int(float(startY) * h / origh)
+            endX = int(float(endX) * w / origw)
+            endY = int(float(endY) * h / origh)
+    
+    return myjson
 
 def userChoice(request, userId, imageUrl, isSick, isSickChoice, sAIx, sAIy, widthAI, heightAI, sACx, sACy, widthAC,
                heightAC):
@@ -13641,3 +13724,4 @@ def userChoice(request, userId, imageUrl, isSick, isSickChoice, sAIx, sAIy, widt
 
     # return 200 (OK) response
     return HttpResponse(status=200)
+

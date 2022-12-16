@@ -7,8 +7,8 @@ class BoxImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'x', 'y', 'w', 'h')
 
 class CornImageSerializer(serializers.ModelSerializer):
-    predictedBox = serializers.StringRelatedField(many=True)
-    actualBoxes = serializers.StringRelatedField(many=True)
+    # predictedBox = serializers.StringRelatedField(many=True)
+    # actualBoxes = serializers.StringRelatedField(many=True)
     
     class Meta:
         model = CornImage
